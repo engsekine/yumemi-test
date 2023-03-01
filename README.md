@@ -1,37 +1,35 @@
 # yumemi-test
 株式会社ゆめみフロントエンドコーディング試験
 
-##　環境構築
-git clone
-- `git clone git@github.com:engsekine/yumemi-test.git`
+## 環境構築
+### 1. git clone
+`$ git clone git@github.com:engsekine/yumemi-test.git`
 
-.envファイルコピー
-- `$ cp .env.sample .env`
-.envにRESASのAPI keyを記述
-`NEXT_PUBLIC_RESAS_API_KEY=`
+### 2. .envファイルコピー
+`$ cp .env.sample .env`  
+.envファイル内`NEXT_PUBLIC_RESAS_API_KEY=` =後にRESASのAPI keyを記述   
 
-yarn起動
-- `$ yarn`
-- `$ yarn build`
+### 3. yarn起動
+`$ yarn && yarn build`  
 
-##　コマンド
-ビルド
-`$ yarn build`
-デベロッパーモード起動
-`$ yarn dev`
-本番環境起動
-`$ yarn start`
-lint起動
-`$ yarn lint`
+## コマンド
+ビルド  
+`$ yarn build`  
+デベロッパーモード起動  
+`$ yarn dev`  
+本番環境起動  
+`$ yarn start`  
+lint起動  
+`$ yarn lint`  
 
-##　ルール
+## ルール
 ### ブランチの切り方
-機能追加
-`{名字}/feature/{issue番号}_{読みやすいタイトル}`
-`sekine/feature/01_add`
-リファクタリング
-`{名字}/refactor/{issue番号}_{読みやすいタイトル}`
-`sekine/refactor/01_add`
+機能追加  
+`{名字}/feature/{issue番号}_{読みやすいタイトル}`  
+`sekine/feature/01_add`  
+リファクタリング  
+`{名字}/refactor/{issue番号}_{読みやすいタイトル}`  
+`sekine/refactor/01_add`  
 
 ### PR のテンプレート：
 ```
