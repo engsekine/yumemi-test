@@ -1,6 +1,12 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
+
+type CheckBox = {
+  prefCode: number
+  prefName: string
+}
+
 const API_BASEURL = "https://opendata.resas-portal.go.jp/api/v1/"
 const config = {
   headers: {
@@ -9,8 +15,8 @@ const config = {
 }
 
 export default function Home() {
-  const [prefectures, setPostPrefectures] = React.useState(null)
-  React.useEffect(() => {
+  const [prefectures, setPostPrefectures] = useState<CheckBox[]>([])
+  useEffect(() => {
     axios.get(API_BASEURL + "prefectures", config).then((response) => {
       setPostPrefectures(response.data.result)
       console.log(Object.values(response.data.result))
@@ -20,6 +26,14 @@ export default function Home() {
   return (
     <main>
       <h2>都道府県リスト</h2>
+      <div>
+        {prefectures.map((prefecture: CheckBox) => (
+          <label key={prefecture.prefName}>
+            <input type="checkbox" name="PrefectureName" />
+            {prefecture.prefName}
+          </label>
+        ))}
+      </div>
     </main>
   )
 }
