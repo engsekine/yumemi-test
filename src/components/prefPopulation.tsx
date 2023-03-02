@@ -9,16 +9,6 @@ const config = {
   },
 }
 
-type CheckBox = {
-  prefCode: number
-  prefName: string
-  check: boolean
-}
-type PrefPopulation = {
-  prefName: string
-  data: { year: number; value: number }
-}
-
 export function PrefPopulation() {
   const [prefectures, setPostPrefectures] = useState<CheckBox[]>([])
   useEffect(() => {
