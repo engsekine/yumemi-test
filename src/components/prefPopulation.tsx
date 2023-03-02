@@ -1,6 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import { CheckBox } from "@/components/checkBox"
+import Graph from "./graph"
 
 const API_BASEURL = "https://opendata.resas-portal.go.jp/api/v1/"
 const config = {
@@ -10,20 +12,27 @@ const config = {
 }
 
 export function PrefPopulation() {
-  const [prefectures, setPostPrefectures] = useState<CheckBox[]>([])
+  const [prefectures, setPostPrefectures] = useState<{
+    message: null
+    result: {
+      prefCode: number
+      prefName: string
+    }[]
+  } | null>(null)
   useEffect(() => {
     axios
       .get(API_BASEURL + "prefectures", config)
       .then((response) => {
         setPostPrefectures(response.data.result)
-        console.log(Object.values(response.data.result))
       })
       .catch((e: unknown) => {
         return null
       })
   }, [])
 
-  const [prefPopulation, setPrefPopulation] = useState<PrefPopulation[]>([])
+  const [prefPopulation, setPrefPopulation] = useState<
+    { prefName: string; data: { year: number; value: number }[] }[]
+  >([])
   function prefectureCheck(prefName: string, prefCode: number, check: boolean) {
     let checkPrefPopulation = prefPopulation.slice()
     if (!check) {
@@ -43,27 +52,15 @@ export function PrefPopulation() {
         })
     }
     setPrefPopulation(checkPrefPopulation)
-    console.log(checkPrefPopulation)
   }
 
   return (
-    <main>
+    <div>
       <h2>都道府県リスト</h2>
       <div>
-        {prefectures.map((prefecture: CheckBox) => (
-          <label key={prefecture.prefName}>
-            <input
-              type="checkbox"
-              name="PrefectureName"
-              id={"checkbox" + prefecture.prefCode}
-              onChange={(event) =>
-                prefectureCheck(prefecture.prefName, prefecture.prefCode, event.target.checked)
-              }
-            />
-            {prefecture.prefName}
-          </label>
-        ))}
+        {prefectures && <CheckBox prefectures={prefectures.result} onChange={prefectureCheck} />}
       </div>
-    </main>
+      <Graph populationData={prefPopulation} />
+    </div>
   )
 }
