@@ -2,6 +2,16 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 
+type CheckBox = {
+  prefCode: number
+  prefName: string
+  check: boolean
+}
+type PrefPopulation = {
+  prefName: string
+  data: { year: number; value: number }
+}
+
 const API_BASEURL = "https://opendata.resas-portal.go.jp/api/v1/"
 const config = {
   headers: {
