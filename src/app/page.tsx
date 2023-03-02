@@ -2,17 +2,17 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 
-type CheckBox = {
-  prefCode: number
-  prefName: string
-  check: boolean
-}
-
 const API_BASEURL = "https://opendata.resas-portal.go.jp/api/v1/"
 const config = {
   headers: {
     "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY,
   },
+}
+
+type CheckBox = {
+  prefCode: number
+  prefName: string
+  check: boolean
 }
 type PrefPopulation = {
   prefName: string
@@ -41,20 +41,20 @@ export default function Home() {
         .get(API_BASEURL + "population/composition/perYear?prefCode=" + String(prefCode), config)
         .then((response) => {
           checkPrefPopulation.push({
-            prefName: response.data.prefName,
+            prefName: prefName,
             data: response.data.result.data[0].data,
           })
           setPrefPopulation(checkPrefPopulation)
-          console.log(checkPrefPopulation)
         })
         .catch((e: unknown) => {
           return
         })
     } else {
+      const deleteIndex = checkPrefPopulation.findIndex((value) => value.prefName === prefName)
+      if (deleteIndex === -1) return
+      checkPrefPopulation.splice(deleteIndex, 1)
+      setPrefPopulation(checkPrefPopulation)
     }
-    console.log(check)
-    console.log(prefName)
-    console.log(prefCode)
   }
 
   return (
