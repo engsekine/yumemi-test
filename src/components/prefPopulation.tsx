@@ -1,6 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import Highcharts from "highcharts"
+import HighchartsReact from "highcharts-react-official"
 
 type CheckBox = {
   prefCode: number
@@ -33,13 +35,17 @@ export function PrefPopulation() {
       })
   }, [])
 
-  const [prefPopulation, setPrefPopulation] = useState<PrefPopulation[]>([])
+  const [prefPopulation, setPrefPopulation] = useState<
+    { prefName: string; data: { year: number; value: number }[] }[]
+  >([])
   function prefectureCheck(prefName: string, prefCode: number, check: boolean) {
     let checkPrefPopulation = prefPopulation.slice()
     if (!check) {
       const deleteIndex = checkPrefPopulation.findIndex((value) => value.prefName === prefName)
       checkPrefPopulation.splice(deleteIndex, 1)
+      setPrefPopulation(checkPrefPopulation)
     } else {
+      if (checkPrefPopulation.findIndex((value) => value.prefName === prefName) !== -1) return
       axios
         .get(API_BASEURL + "population/composition/perYear?prefCode=" + String(prefCode), config)
         .then((response) => {
@@ -47,13 +53,50 @@ export function PrefPopulation() {
             prefName: prefName,
             data: response.data.result.data[0].data,
           })
+          setPrefPopulation(checkPrefPopulation)
         })
         .catch((e: unknown) => {
           return null
         })
     }
-    setPrefPopulation(checkPrefPopulation)
     console.log(checkPrefPopulation)
+  }
+
+  let series: Highcharts.SeriesOptionsType[] = []
+  let categories = []
+
+  for (let p of prefPopulation) {
+    let data = []
+    for (let pd of p.data) {
+      data.push(pd.value)
+      categories.push(String(pd.year))
+    }
+    series.push({
+      type: "line",
+      name: p.prefName,
+      data: data,
+    })
+  }
+
+  const options: Highcharts.Options = {
+    title: {
+      text: "",
+    },
+    xAxis: {
+      title: {
+        text: "年度",
+      },
+      categories: categories,
+    },
+    accessibility: {
+      enabled: false,
+    },
+    yAxis: {
+      title: {
+        text: "人口数",
+      },
+    },
+    series: series.length === 0 ? [{ type: "line", name: "都道府県名", data: [] }] : series,
   }
 
   return (
@@ -74,6 +117,7 @@ export function PrefPopulation() {
           </label>
         ))}
       </div>
+      <HighchartsReact highcharts={Highcharts} options={options} immutable={true} />
     </main>
   )
 }
