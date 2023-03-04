@@ -49,9 +49,13 @@ export function PrefPopulation() {
       axios
         .get(API_BASEURL + "population/composition/perYear?prefCode=" + String(prefCode), config)
         .then((response) => {
+          let data = []
+          for (let i = 0; i < 13; i++) {
+            data.push(response.data.result.data[0].data[i])
+          }
           checkPrefPopulation.push({
             prefName: prefName,
-            data: response.data.result.data[0].data,
+            data: data,
           })
           setPrefPopulation(checkPrefPopulation)
         })
@@ -59,18 +63,21 @@ export function PrefPopulation() {
           return null
         })
     }
-    console.log(checkPrefPopulation)
   }
 
   let series: Highcharts.SeriesOptionsType[] = []
   let categories = []
 
+  console.log(prefPopulation)
+
   for (let p of prefPopulation) {
     let data = []
+
     for (let pd of p.data) {
       data.push(pd.value)
       categories.push(String(pd.year))
     }
+
     series.push({
       type: "line",
       name: p.prefName,
@@ -82,6 +89,7 @@ export function PrefPopulation() {
     title: {
       text: "",
     },
+
     xAxis: {
       title: {
         text: "年度",
