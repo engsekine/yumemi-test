@@ -12,6 +12,12 @@
 ### 3. yarn起動
 `$ yarn && yarn build`  
 
+### 4. デベロッパーモード起動  
+`$ yarn dev`  
+
+### 5. ローカルホスト起動  
+http://localhost:3000/
+
 ## コマンド
 ビルド  
 `$ yarn build`  
