@@ -105,7 +105,7 @@ export function PrefPopulation() {
   }
 
   return (
-    <main>
+    <div>
       <h2>都道府県リスト</h2>
       <div>
         {prefectures.map((prefecture: CheckBox) => (
@@ -123,6 +123,6 @@ export function PrefPopulation() {
         ))}
       </div>
       <HighchartsReact highcharts={Highcharts} options={options} immutable={true} />
-    </main>
+    </div>
   )
 }
