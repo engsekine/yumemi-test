@@ -105,9 +105,9 @@ export function PrefPopulation() {
   }
 
   return (
-    <div>
-      <h2>都道府県リスト</h2>
-      <div>
+    <div className="prefectures">
+      <h2>都道府県</h2>
+      <div className="prefectures-list">
         {prefectures.map((prefecture: CheckBox) => (
           <label key={prefecture.prefName}>
             <input
