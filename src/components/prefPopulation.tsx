@@ -28,7 +28,6 @@ export function PrefPopulation() {
       .get(API_BASEURL + "prefectures", config)
       .then((response) => {
         setPostPrefectures(response.data.result)
-        console.log(Object.values(response.data.result))
       })
       .catch((e: unknown) => {
         return null
@@ -67,8 +66,6 @@ export function PrefPopulation() {
 
   let series: Highcharts.SeriesOptionsType[] = []
   let categories = []
-
-  console.log(prefPopulation)
 
   for (let p of prefPopulation) {
     let data = []
