@@ -6,7 +6,7 @@
 `$ git clone git@github.com:engsekine/yumemi-test.git`
 
 ### 2. .envファイルコピー
-`$ cp .env.sample .env.local`  
+`$ cp .env.local`  
 .envファイル内`NEXT_PUBLIC_RESAS_API_KEY=` =後にRESASのAPI keyを記述   
 
 ### 3. yarn起動
