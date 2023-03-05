@@ -7,7 +7,7 @@
 
 ### 2. .envファイルコピー
 `$ cp .env.local`  
-RESAS怪異登録  
+RESAS会員登録  
 https://opendata.resas-portal.go.jp/form.html  
 .envファイル内`NEXT_PUBLIC_RESAS_API_KEY=` =後にRESASのAPI keyを記述   
 
